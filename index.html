@@ -109,7 +109,7 @@
       color: var(--gold-light);
       line-height: 1.8;
       text-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
-      margin-bottom: 14px
+      margin-bottom: 14px;
     }
 
     .arabic-salam {
@@ -253,6 +253,13 @@
       margin-bottom: 10px;
     }
 
+    .event-venue-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #ffe6bd;
+      letter-spacing: 0.5px;
+    }
+
     .event-venue-sub {
       font-size: 0.82rem;
       color: #c5aba0;
@@ -327,13 +334,31 @@
       box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
     }
 
-    .btn-whatsapp {
-      background: #25d366;
-      color: #ffffff;
+    .btn-submit-rsvp {
+      background: var(--gold-primary);
+      color: #1a030b;
       border: none;
       font-size: 0.9rem;
       font-weight: 600;
       margin-top: 8px;
+    }
+
+    .btn-submit-rsvp:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .rsvp-success-msg {
+      display: none;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.85rem;
+      margin-top: 10px;
     }
 
     .footer-regards {
@@ -416,9 +441,9 @@
           <div class="event-datetime">📅 Sunday, 03 January 2027 • 6:00 PM onwards</div>
           <div class="event-venue-name">Royal Convention Center</div>
           <div class="event-venue-sub">M.E.S College Road, Marampally, Aluva</div>
-         <a class="btn-action btn-map" href="https://maps.app.goo.gl/tNghjLz29mftKZKM6" target="_blank">
-  📍 Open in Google Maps
-</a>
+          <a class="btn-action btn-map" href="https://maps.app.goo.gl/tNghjLz29mftKZKM6" target="_blank">
+            📍 Open in Google Maps
+          </a>
         </div>
       </div>
 
@@ -428,7 +453,7 @@
       </a>
     </div>
 
-    <!-- Card 4: RSVP via WhatsApp -->
+    <!-- Card 4: RSVP via Google Sheets -->
     <div class="card-panel reveal">
       <div style="font-size: 1.1rem; color: var(--gold-light); margin-bottom: 4px;">R. S. V. P</div>
       <p style="font-size: 0.78rem; color: var(--text-soft);">Please confirm your attendance to help us prepare for your presence</p>
@@ -444,14 +469,22 @@
           <select id="guestCount" class="form-select">
             <option value="1">1 Person</option>
             <option value="2">2 Persons</option>
-            <option value="3-4">3 to 4 Persons</option>
-            <option value="5+">Family (5+ Persons)</option>
+            <option value="3">3 Persons</option>
+            <option value="4">4 Persons</option>
+            <option value="5">5 Persons</option>
+            <option value="6">6 Persons</option>
+            <option value="7">7 Persons</option>
+            <option value="8">8 Persons</option>
           </select>
         </div>
 
-        <button type="submit" class="btn-action btn-whatsapp">
-          💬 Send RSVP via WhatsApp
+        <button type="submit" id="rsvpSubmitBtn" class="btn-action btn-submit-rsvp">
+          ✨ Confirm RSVP
         </button>
+
+        <div id="rsvpMessage" class="rsvp-success-msg">
+          Thank you! Your RSVP has been confirmed.
+        </div>
       </form>
 
       <div class="footer-regards">
@@ -501,27 +534,43 @@
     // 3. Google Calendar Dynamic Link (Reception 6:00 PM to 10:00 PM IST)
     const gCalTitle = encodeURIComponent("Wedding Reception: Akber Shan & Fidha Sageer");
     const gCalDetails = encodeURIComponent("Wedding Reception of Akber Shan & Fidha Sageer at Royal Convention Center, MES College Road, Marampally, Aluva.");
-    const gCalLocation = encodeURIComponent("Royal Convention Center, MES College Road, Marampally, Aluva");
-    const gCalDates = "20270103T123000Z/20270103T163000Z"; // 6:00 PM - 10:00 PM IST in UTC
+    const gCalLocation = encodeURIComponent("https://maps.app.goo.gl/tNghjLz29mftKZKM6");
+    const gCalDates = "20270103T123000Z/20270103T163000Z";
     document.getElementById('calendarLink').href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${gCalTitle}&dates=${gCalDates}&details=${gCalDetails}&location=${gCalLocation}`;
 
-    // 4. RSVP WhatsApp Handler
-    // REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER (with Country Code 91 for India):
-    const HOST_WHATSAPP_NUMBER = "919876543210"; 
+    // 4. RSVP Google Sheets Handler
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxIV9mXVZUipYzqKucc6-pbvVLxS1HjFxYbZRDWIsK0aj77FhFBq6SsEmMm5sT-zUvQ/exec";
 
     document.getElementById('rsvpForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const name = document.getElementById('guestName').value;
-      const count = document.getElementById('guestCount').value;
+      const submitBtn = document.getElementById('rsvpSubmitBtn');
+      const rsvpMsg = document.getElementById('rsvpMessage');
+      
+      const guestName = document.getElementById('guestName').value.trim();
+      const guestCount = document.getElementById('guestCount').value;
 
-      const message = `*Wedding Reception RSVP — Akber & Fidha*\n\n` +
-                      `👤 *Name:* ${name}\n` +
-                      `👥 *Attending:* ${count}\n` +
-                      `📍 *Function:* Wedding Reception (Royal Convention Center)\n\n` +
-                      `Looking forward to celebrating with you! ✨`;
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Submitting...";
 
-      const whatsappUrl = `https://api.whatsapp.com/send?phone=${HOST_WHATSAPP_NUMBER}&text=${encodeURIComponent(message)}`;
-      window.open(whatsappUrl, '_blank');
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: guestName,
+          count: parseInt(guestCount, 10),
+          notes: "Confirmed for Reception"
+        })
+      })
+      .then(() => {
+        submitBtn.style.display = "none";
+        rsvpMsg.style.display = "block";
+      })
+      .catch((err) => {
+        alert("There was an issue saving your RSVP. Please try again.");
+        submitBtn.disabled = false;
+        submitBtn.innerText = "✨ Confirm RSVP";
+      });
     });
 
     // 5. Floating Gold Sparkles Canvas
