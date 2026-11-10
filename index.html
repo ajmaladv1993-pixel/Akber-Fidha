@@ -221,47 +221,48 @@
       background: rgba(35, 4, 16, 0.7);
       border: 1px solid rgba(212, 175, 55, 0.2);
       border-radius: 14px;
-      padding: 18px 16px;
-      text-align: left;
+      padding: 20px 16px;
+      text-align: center;
     }
 
     .event-type-badge {
       display: inline-block;
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: #120309;
       background: var(--gold-primary);
-      padding: 3px 10px;
+      padding: 4px 14px;
       border-radius: 20px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .event-heading {
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       color: var(--text-white);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .event-datetime {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.82rem;
+      font-size: 0.9rem;
       color: var(--gold-light);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .event-venue-name {
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       font-weight: 600;
       color: #ffe6bd;
+      letter-spacing: 0.5px;
     }
 
     .event-venue-sub {
-      font-size: 0.78rem;
+      font-size: 0.82rem;
       color: #c5aba0;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
 
     .btn-action {
@@ -270,9 +271,9 @@
       justify-content: center;
       gap: 6px;
       width: 100%;
-      padding: 11px 16px;
+      padding: 12px 16px;
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       font-weight: 600;
       text-decoration: none;
       border-radius: 10px;
@@ -294,7 +295,7 @@
       background: var(--gold-primary);
       border: none;
       color: #1a030b;
-      margin-top: 10px;
+      margin-top: 14px;
     }
 
     /* RSVP Form */
@@ -350,12 +351,12 @@
 </head>
 <body>
 
-  <!-- Shimmering particles -->
+  <!-- Ambient Shimmering Particles -->
   <canvas id="particleCanvas"></canvas>
 
   <div class="app-wrapper">
 
-    <!-- Card 1: Sacred Opening & Header -->
+    <!-- Card 1: Header & Family Announcement -->
     <div class="card-panel reveal">
       <div class="arabic-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
       <div class="arabic-salam">السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ ٱللَّهِ وَبَرَكَاتُهُ</div>
@@ -385,9 +386,9 @@
       </div>
     </div>
 
-    <!-- Card 2: Live Countdown Timer -->
+    <!-- Card 2: Live Countdown Timer (Targeting 6:00 PM Reception) -->
     <div class="countdown-section reveal">
-      <div class="countdown-header">Counting Down to the Blessed Union</div>
+      <div class="countdown-header">Counting Down to the Reception</div>
       <div class="countdown-grid">
         <div class="time-slot">
           <div class="time-val" id="days">--</div>
@@ -408,26 +409,13 @@
       </div>
     </div>
 
-    <!-- Card 3: Events & Schedule -->
+    <!-- Card 3: Reception Venue & Location -->
     <div class="card-panel reveal">
       <div style="font-size: 1.1rem; color: var(--gold-light); margin-bottom: 16px; letter-spacing: 1px;">
-        PROGRAMME & VENUES
+        RECEPTION DETAILS
       </div>
 
       <div class="events-grid">
-        <!-- Event: Nikah -->
-        <div class="event-item">
-          <span class="event-type-badge">Solemnisation (Nikah)</span>
-          <div class="event-heading">Nikah Ceremony</div>
-          <div class="event-datetime">📅 Sunday, 03 January 2027 • 11:30 AM</div>
-          <div class="event-venue-name">Treesa Garden Auditorium</div>
-          <div class="event-venue-sub">Perumpadanna, North Paravur</div>
-          <a class="btn-action btn-map" href="https://maps.google.com/?q=Treesa+Garden+Auditorium,+Perumpadanna,+North+Paravur" target="_blank">
-            📍 Directions on Google Maps
-          </a>
-        </div>
-
-        <!-- Event: Reception -->
         <div class="event-item">
           <span class="event-type-badge">Wedding Reception</span>
           <div class="event-heading">Evening Reception</div>
@@ -435,7 +423,7 @@
           <div class="event-venue-name">Royal Convention Center</div>
           <div class="event-venue-sub">M.E.S College Road, Marampally, Aluva</div>
           <a class="btn-action btn-map" href="https://maps.google.com/?q=MES+Rd,+Marampally,+Kerala+683105" target="_blank">
-            📍 Directions on Google Maps
+            📍 Open in Google Maps
           </a>
         </div>
       </div>
@@ -467,15 +455,6 @@
           </select>
         </div>
 
-        <div class="form-group">
-          <label for="attendingEvent">Will you join for:</label>
-          <select id="attendingEvent" class="form-select">
-            <option value="Both Events (Nikah & Reception)">Both Nikah & Reception</option>
-            <option value="Wedding Reception (Royal Convention)">Wedding Reception (Evening)</option>
-            <option value="Nikah Ceremony (Treesa Garden)">Nikah Ceremony (Morning)</option>
-          </select>
-        </div>
-
         <button type="submit" class="btn-action btn-whatsapp">
           💬 Send RSVP via WhatsApp
         </button>
@@ -483,15 +462,15 @@
 
       <div class="footer-regards">
         With Best Compliments & Regards:<br>
-        <strong>Aafiya Thasneem & Adhil</strong>
+        <strong>Aafiya Thasneem</strong>
       </div>
     </div>
 
   </div>
 
   <script>
-    // 1. Live Countdown
-    const targetDate = new Date('January 3, 2027 11:30:00 GMT+0530').getTime();
+    // 1. Live Countdown targeted to 6:00 PM IST (Reception)
+    const targetDate = new Date('January 3, 2027 18:00:00 GMT+0530').getTime();
 
     function updateCountdown() {
       const now = new Date().getTime();
@@ -508,7 +487,7 @@
         document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
         document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
       } else {
-        document.querySelector('.countdown-section').innerHTML = "<div style='color: #d4af37; font-weight: bold;'>The Wedding Celebrations Have Begun!</div>";
+        document.querySelector('.countdown-section').innerHTML = "<div style='color: #d4af37; font-weight: bold;'>The Celebration Has Begun!</div>";
       }
     }
     setInterval(updateCountdown, 1000);
@@ -525,11 +504,11 @@
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // 3. Google Calendar Dynamic Link
-    const gCalTitle = encodeURIComponent("Wedding: Akber Shan & Fidha Sageer");
-    const gCalDetails = encodeURIComponent("Nikah at Treesa Garden Auditorium, North Paravur (11:30 AM) followed by Reception at Royal Convention Center, Marampally (6:00 PM).");
+    // 3. Google Calendar Dynamic Link (Reception 6:00 PM to 10:00 PM IST)
+    const gCalTitle = encodeURIComponent("Wedding Reception: Akber Shan & Fidha Sageer");
+    const gCalDetails = encodeURIComponent("Wedding Reception of Akber Shan & Fidha Sageer at Royal Convention Center, MES College Road, Marampally, Aluva.");
     const gCalLocation = encodeURIComponent("Royal Convention Center, MES College Road, Marampally, Aluva");
-    const gCalDates = "20270103T060000Z/20270103T163000Z"; // 11:30 AM to 10:00 PM IST in UTC
+    const gCalDates = "20270103T123000Z/20270103T163000Z"; // 6:00 PM - 10:00 PM IST in UTC
     document.getElementById('calendarLink').href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${gCalTitle}&dates=${gCalDates}&details=${gCalDetails}&location=${gCalLocation}`;
 
     // 4. RSVP WhatsApp Handler
@@ -540,12 +519,11 @@
       e.preventDefault();
       const name = document.getElementById('guestName').value;
       const count = document.getElementById('guestCount').value;
-      const eventChoice = document.getElementById('attendingEvent').value;
 
-      const message = `*Wedding RSVP — Akber & Fidha*\n\n` +
+      const message = `*Wedding Reception RSVP — Akber & Fidha*\n\n` +
                       `👤 *Name:* ${name}\n` +
                       `👥 *Attending:* ${count}\n` +
-                      `📍 *Function:* ${eventChoice}\n\n` +
+                      `📍 *Function:* Wedding Reception (Royal Convention Center)\n\n` +
                       `Looking forward to celebrating with you! ✨`;
 
       const whatsappUrl = `https://api.whatsapp.com/send?phone=${HOST_WHATSAPP_NUMBER}&text=${encodeURIComponent(message)}`;
