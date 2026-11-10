@@ -141,6 +141,18 @@
       50% { transform: scale(1.06); box-shadow: 0 6px 24px rgba(0,0,0,0.8), 0 0 20px rgba(212,175,55,0.65); }
     }
 
+    .envelope-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      background: linear-gradient(135deg, #ffffff 0%, #fbe39d 40%, #d4af37 75%, #aa7c11 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 22px;
+      text-align: center;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8));
+      letter-spacing: 1px;
+    }
+    
     .tap-hint {
       margin-top: 45px;
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -547,6 +559,7 @@
 
   <!-- Virtual Unsealing Envelope Screen -->
   <div id="envelopeOverlay">
+    <div class="envelope-title">Akber &amp; Fidha</div>
     <div class="envelope-box" id="envelopeBox">
       <div class="envelope-flap"></div>
       <div class="wax-seal" id="waxSealBtn">A&amp;F</div>
