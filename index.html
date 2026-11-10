@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Akber Shan & Fidha Sageer — Wedding Invitation</title>
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #120309;
+      --card-bg: #22030f;
+      --card-gradient: linear-gradient(180deg, #2a0312 0%, #17010a 100%);
+      --gold-primary: #d4af37;
+      --gold-light: #fbe39d;
+      --gold-dim: #9c7f28;
+      --text-white: #ffffff;
+      --text-soft: #ecd8c9;
+      --accent-rose: rgba(212, 175, 55, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-soft);
+      font-family: 'Playfair Display', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Ambient Gold Shimmer Canvas */
+    #particleCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Main Mobile Viewport Frame */
+    .app-wrapper {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      position: relative;
+      z-index: 2;
+      padding: 24px 16px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Scroll Reveal Animation Styles */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Card Panels */
+    .card-panel {
+      background: var(--card-gradient);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 20px;
+      padding: 28px 20px;
+      text-align: center;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-panel::before {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      right: 4px;
+      bottom: 4px;
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      border-radius: 16px;
+      pointer-events: none;
+    }
+
+    /* Arabic Calligraphy */
+    .arabic-bismillah {
+      font-family: 'Amiri', serif;
+      font-size: 1.6rem;
+      color: var(--gold-light);
+      line-height: 1.8;
+      text-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+    }
+
+    .arabic-salam {
+      font-family: 'Amiri', serif;
+      font-size: 1.3rem;
+      color: var(--gold-light);
+      margin-bottom: 14px;
+    }
+
+    .parents-title {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--gold-light);
+    }
+
+    .residence {
+      font-size: 0.82rem;
+      color: #dfc3b2;
+      font-style: italic;
+      margin-top: 4px;
+    }
+
+    .invitation-quote {
+      font-size: 0.86rem;
+      line-height: 1.5;
+      margin: 18px 0 12px;
+      color: var(--text-soft);
+    }
+
+    .couple-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.2rem;
+      color: var(--text-white);
+      line-height: 1.2;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.7);
+      margin: 6px 0;
+    }
+
+    .ampersand {
+      font-size: 1.5rem;
+      color: var(--gold-primary);
+      margin: 4px 0;
+    }
+
+    .kinship-notes {
+      font-size: 0.74rem;
+      color: #bda290;
+      line-height: 1.45;
+      font-style: italic;
+      padding: 0 10px;
+    }
+
+    /* Countdown Grid */
+    .countdown-section {
+      background: rgba(20, 2, 9, 0.7);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 16px;
+      padding: 20px 14px;
+    }
+
+    .countdown-header {
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 14px;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .time-slot {
+      background: rgba(45, 6, 21, 0.8);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 12px;
+      padding: 10px 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .time-val {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-white);
+    }
+
+    .time-lbl {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--gold-light);
+      margin-top: 2px;
+    }
+
+    /* Schedule Cards */
+    .events-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .event-item {
+      background: rgba(35, 4, 16, 0.7);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 14px;
+      padding: 18px 16px;
+      text-align: left;
+    }
+
+    .event-type-badge {
+      display: inline-block;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #120309;
+      background: var(--gold-primary);
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+
+    .event-heading {
+      font-size: 1.15rem;
+      color: var(--text-white);
+      margin-bottom: 4px;
+    }
+
+    .event-datetime {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.82rem;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+    }
+
+    .event-venue-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #ffe6bd;
+    }
+
+    .event-venue-sub {
+      font-size: 0.78rem;
+      color: #c5aba0;
+      margin-bottom: 12px;
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      padding: 11px 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: transform 0.2s ease, filter 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-action:active {
+      transform: scale(0.98);
+    }
+
+    .btn-map {
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+    }
+
+    .btn-calendar {
+      background: var(--gold-primary);
+      border: none;
+      color: #1a030b;
+      margin-top: 10px;
+    }
+
+    /* RSVP Form */
+    .rsvp-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: left;
+      margin-top: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--gold-light);
+      margin-bottom: 5px;
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      background: rgba(18, 2, 8, 0.8);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: var(--text-white);
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.88rem;
+      outline: none;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--gold-light);
+      box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+    }
+
+    .btn-whatsapp {
+      background: #25d366;
+      color: #ffffff;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .footer-regards {
+      font-size: 0.8rem;
+      color: #c5aba0;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Shimmering particles -->
+  <canvas id="particleCanvas"></canvas>
+
+  <div class="app-wrapper">
+
+    <!-- Card 1: Sacred Opening & Header -->
+    <div class="card-panel reveal">
+      <div class="arabic-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      <div class="arabic-salam">السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ ٱللَّهِ وَبَرَكَاتُهُ</div>
+
+      <div class="parents-title">Mr. KABEER KM & Mrs. SUNITHA BEEVI</div>
+      <div class="residence">Kottackal House, Kuttikkattukara P.O, Eloor</div>
+
+      <div class="invitation-quote">
+        Solicit your esteemed presence and blessings with family<br>
+        on the auspicious occasion of the wedding of our Son
+      </div>
+
+      <div class="couple-title">Akber Shan</div>
+      <div class="kinship-notes">
+        Grandson of late Marakkar Pillai Kottackal and late Thachi Marakkar Pillai,<br>
+        Mr. Abdulkhader Alungal and Mrs. Aysha Beevi
+      </div>
+
+      <div class="ampersand">&</div>
+
+      <div class="couple-title">Fidha Sageer</div>
+      <div class="parents-title" style="font-size: 0.88rem;">D/o Mr. CH SAGEER & Mrs. FEMINA SAGEER</div>
+      <div class="residence">Cheenamcode (H), VIP Colony, Mannam P.O, N. Paravur</div>
+      <div class="kinship-notes" style="margin-top: 5px;">
+        Granddaughter of late C.M Hamza Cheenamcode and late Sainaba Hamza,<br>
+        P.K Ebrahim Pallathparambil and late Nafeesa Ebrahim
+      </div>
+    </div>
+
+    <!-- Card 2: Live Countdown Timer -->
+    <div class="countdown-section reveal">
+      <div class="countdown-header">Counting Down to the Blessed Union</div>
+      <div class="countdown-grid">
+        <div class="time-slot">
+          <div class="time-val" id="days">--</div>
+          <div class="time-lbl">Days</div>
+        </div>
+        <div class="time-slot">
+          <div class="time-val" id="hours">--</div>
+          <div class="time-lbl">Hours</div>
+        </div>
+        <div class="time-slot">
+          <div class="time-val" id="minutes">--</div>
+          <div class="time-lbl">Mins</div>
+        </div>
+        <div class="time-slot">
+          <div class="time-val" id="seconds">--</div>
+          <div class="time-lbl">Secs</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: Events & Schedule -->
+    <div class="card-panel reveal">
+      <div style="font-size: 1.1rem; color: var(--gold-light); margin-bottom: 16px; letter-spacing: 1px;">
+        PROGRAMME & VENUES
+      </div>
+
+      <div class="events-grid">
+        <!-- Event: Nikah -->
+        <div class="event-item">
+          <span class="event-type-badge">Solemnisation (Nikah)</span>
+          <div class="event-heading">Nikah Ceremony</div>
+          <div class="event-datetime">📅 Sunday, 03 January 2027 • 11:30 AM</div>
+          <div class="event-venue-name">Treesa Garden Auditorium</div>
+          <div class="event-venue-sub">Perumpadanna, North Paravur</div>
+          <a class="btn-action btn-map" href="https://maps.google.com/?q=Treesa+Garden+Auditorium,+Perumpadanna,+North+Paravur" target="_blank">
+            📍 Directions on Google Maps
+          </a>
+        </div>
+
+        <!-- Event: Reception -->
+        <div class="event-item">
+          <span class="event-type-badge">Wedding Reception</span>
+          <div class="event-heading">Evening Reception</div>
+          <div class="event-datetime">📅 Sunday, 03 January 2027 • 6:00 PM onwards</div>
+          <div class="event-venue-name">Royal Convention Center</div>
+          <div class="event-venue-sub">M.E.S College Road, Marampally, Aluva</div>
+          <a class="btn-action btn-map" href="https://maps.google.com/?q=MES+Rd,+Marampally,+Kerala+683105" target="_blank">
+            📍 Directions on Google Maps
+          </a>
+        </div>
+      </div>
+
+      <!-- Add to Google Calendar -->
+      <a class="btn-action btn-calendar" id="calendarLink" target="_blank">
+        🗓️ Add to Google Calendar
+      </a>
+    </div>
+
+    <!-- Card 4: RSVP via WhatsApp -->
+    <div class="card-panel reveal">
+      <div style="font-size: 1.1rem; color: var(--gold-light); margin-bottom: 4px;">R. S. V. P</div>
+      <p style="font-size: 0.78rem; color: var(--text-soft);">Please confirm your attendance to help us prepare for your presence</p>
+
+      <form class="rsvp-form" id="rsvpForm">
+        <div class="form-group">
+          <label for="guestName">Your Name / Family Name</label>
+          <input type="text" id="guestName" class="form-input" placeholder="e.g. Adv. Ajmal Ali & Family" required />
+        </div>
+
+        <div class="form-group">
+          <label for="guestCount">Number of Attendees</label>
+          <select id="guestCount" class="form-select">
+            <option value="1">1 Person</option>
+            <option value="2">2 Persons</option>
+            <option value="3-4">3 to 4 Persons</option>
+            <option value="5+">Family (5+ Persons)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="attendingEvent">Will you join for:</label>
+          <select id="attendingEvent" class="form-select">
+            <option value="Both Events (Nikah & Reception)">Both Nikah & Reception</option>
+            <option value="Wedding Reception (Royal Convention)">Wedding Reception (Evening)</option>
+            <option value="Nikah Ceremony (Treesa Garden)">Nikah Ceremony (Morning)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-action btn-whatsapp">
+          💬 Send RSVP via WhatsApp
+        </button>
+      </form>
+
+      <div class="footer-regards">
+        With Best Compliments & Regards:<br>
+        <strong>Aafiya Thasneem & Adhil</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // 1. Live Countdown
+    const targetDate = new Date('January 3, 2027 11:30:00 GMT+0530').getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        document.getElementById('days').innerText = days;
+        document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+      } else {
+        document.querySelector('.countdown-section').innerHTML = "<div style='color: #d4af37; font-weight: bold;'>The Wedding Celebrations Have Begun!</div>";
+      }
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // 2. Scroll Reveal Animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // 3. Google Calendar Dynamic Link
+    const gCalTitle = encodeURIComponent("Wedding: Akber Shan & Fidha Sageer");
+    const gCalDetails = encodeURIComponent("Nikah at Treesa Garden Auditorium, North Paravur (11:30 AM) followed by Reception at Royal Convention Center, Marampally (6:00 PM).");
+    const gCalLocation = encodeURIComponent("Royal Convention Center, MES College Road, Marampally, Aluva");
+    const gCalDates = "20270103T060000Z/20270103T163000Z"; // 11:30 AM to 10:00 PM IST in UTC
+    document.getElementById('calendarLink').href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${gCalTitle}&dates=${gCalDates}&details=${gCalDetails}&location=${gCalLocation}`;
+
+    // 4. RSVP WhatsApp Handler
+    // REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER (with Country Code 91 for India):
+    const HOST_WHATSAPP_NUMBER = "919876543210"; 
+
+    document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('guestName').value;
+      const count = document.getElementById('guestCount').value;
+      const eventChoice = document.getElementById('attendingEvent').value;
+
+      const message = `*Wedding RSVP — Akber & Fidha*\n\n` +
+                      `👤 *Name:* ${name}\n` +
+                      `👥 *Attending:* ${count}\n` +
+                      `📍 *Function:* ${eventChoice}\n\n` +
+                      `Looking forward to celebrating with you! ✨`;
+
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=${HOST_WHATSAPP_NUMBER}&text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    });
+
+    // 5. Floating Gold Sparkles Canvas
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + Math.random() * 20;
+        this.size = Math.random() * 2.2 + 0.8;
+        this.speedY = Math.random() * 0.7 + 0.3;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.alpha = Math.random() * 0.7 + 0.2;
+      }
+      update() {
+        this.y -= this.speedY;
+        this.x += this.speedX;
+        if (this.y < -10) this.reset();
+      }
+      draw() {
+        ctx.fillStyle = `rgba(212, 175, 55, ${this.alpha})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 40; i++) {
+      particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>
