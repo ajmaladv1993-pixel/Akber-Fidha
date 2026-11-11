@@ -161,14 +161,14 @@
       pointer-events: none;
     }
 
-    .envelope-box.unsealed .envelope-flap {
-      transform: rotateX(180deg) scaleY(-1);
+   .envelope-box.unsealed .wax-seal {
+      transform: translate(-50%, -50%) scale(0.6);
       opacity: 0;
-      z-index: 1;
+      pointer-events: none;
     }
-
+    
     /* Wax Seal Positioned Exactly on the Flap Tip */
-    .wax-seal {
+   .wax-seal {
       width: 78px;
       height: 78px;
       border-radius: 50%;
@@ -179,16 +179,16 @@
       align-items: center;
       justify-content: center;
       position: absolute;
-      top: 175px; /* Locked directly over the triangular point of the 180px flap */
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 4;
+      top: 180px; /* Aligns with the 180px bottom tip of the flap */
+      left: 50%; /* Locks exactly in the horizontal center */
+      transform: translate(-50%, -50%); /* Centers the seal over the tip */
+      z-index: 5;
       cursor: pointer;
       user-select: none;
       transition: transform 0.4s ease, opacity 0.4s ease;
       animation: sealPulse 2.4s infinite ease-in-out;
     }
-
+    
     .seal-text {
       font-family: 'Playfair Display', serif;
       font-size: 1.45rem;
