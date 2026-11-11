@@ -73,7 +73,7 @@
       z-index: 1;
     }
 
-    /* Virtual Envelope Overlay */
+   /* Virtual Envelope Overlay */
     #envelopeOverlay {
       position: fixed;
       inset: 0;
@@ -93,26 +93,16 @@
       pointer-events: none;
     }
 
-    .envelope-title {
-      font-family: 'Pinyon Script', cursive;
-      font-size: 3.5rem;
-      background: linear-gradient(135deg, #ffffff 0%, #fbe39d 40%, #d4af37 75%, #aa7c11 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 24px;
-      text-align: center;
-      padding: 4px 16px;
-      line-height: 1.35;
-      filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.85));
-      letter-spacing: 1px;
-    }
-
- /* Enlarged Photo Envelope Box */
+    /* Portrait Photo Envelope Box */
     .envelope-box {
       width: 90%;
       max-width: 360px;
       height: 480px;
-      background: #17010a url('envelop.jpg') center center / cover no-repeat;
+      background-color: #17010a;
+      background-image: url('envelop.jpg');
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
       border: 2px solid rgba(212, 175, 55, 0.6);
       border-radius: 18px;
       position: relative;
@@ -121,17 +111,17 @@
       overflow: hidden;
     }
 
-    /* Ambient Dark Gradient Inset for contrast */
+    /* Subtle Dark Vignette on Photo */
     .envelope-box::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at center, transparent 40%, rgba(18, 2, 8, 0.7) 100%);
+      background: radial-gradient(circle at center, transparent 40%, rgba(18, 2, 8, 0.65) 100%);
       pointer-events: none;
       z-index: 1;
     }
 
-/* Frosted Transparent Acrylic/Glass Flap Strictly Masked to Triangle */
+    /* Acrylic Glass Flap (Confined strictly to triangle) */
     .envelope-flap {
       position: absolute;
       top: 0;
@@ -144,9 +134,8 @@
         rgba(60, 6, 30, 0.25) 50%,
         rgba(20, 2, 10, 0.45) 100%
       );
-      backdrop-filter: blur(10px) saturate(140%);
-      -webkit-backdrop-filter: blur(10px) saturate(140%);
-      /* Dual mask & clip-path forces the blur strictly into the triangle */
+      backdrop-filter: blur(8px) saturate(140%);
+      -webkit-backdrop-filter: blur(8px) saturate(140%);
       clip-path: polygon(0 0, 100% 0, 50% 100%);
       -webkit-mask-image: linear-gradient(black, black);
       -webkit-mask-composite: destination-in;
@@ -156,7 +145,7 @@
       z-index: 3;
     }
 
-    /* Metallic Gold Border Along the V-Edge */
+    /* Solid Gold Border Framing the Triangular Flap Edge */
     .envelope-flap::before {
       content: '';
       position: absolute;
@@ -172,9 +161,10 @@
       );
       pointer-events: none;
       z-index: 4;
+      filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.6));
     }
 
-    /* Specular Diagonal Light Sheen */
+    /* Diagonal Glass Surface Glare */
     .envelope-flap::after {
       content: '';
       position: absolute;
@@ -188,8 +178,15 @@
       pointer-events: none;
       z-index: 4;
     }
- 
-   /* Wax Seal Locked Exactly on the 180px Flap Tip */
+
+    /* Flap Fold-Open State */
+    .envelope-box.unsealed .envelope-flap {
+      transform: rotateX(180deg);
+      opacity: 0;
+      z-index: 1;
+    }
+
+    /* Wax Seal Anchored Over the Flap Point */
     .wax-seal {
       width: 78px;
       height: 78px;
@@ -211,12 +208,6 @@
       animation: sealPulse 2.4s infinite ease-in-out;
     }
 
-    .envelope-box.unsealed .wax-seal {
-      transform: translate(-50%, -50%) scale(0.6);
-      opacity: 0;
-      pointer-events: none;
-    }
-    
     .seal-text {
       font-family: 'Playfair Display', serif;
       font-size: 1.45rem;
@@ -229,6 +220,13 @@
       transform: translateY(-1px);
     }
 
+    /* Unsealed Fade Out */
+    .envelope-box.unsealed .wax-seal {
+      transform: translate(-50%, -50%) scale(0.6);
+      opacity: 0;
+      pointer-events: none;
+    }
+
     @keyframes sealPulse {
       0%, 100% {
         transform: translate(-50%, -50%) scale(1);
@@ -239,9 +237,9 @@
         box-shadow: 0 8px 26px rgba(0, 0, 0, 0.85), 0 0 22px rgba(212, 175, 55, 0.7);
       }
     }
-    
+
     .tap-hint {
-      margin-top: 48px;
+      margin-top: 28px;
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 0.78rem;
       letter-spacing: 2.5px;
