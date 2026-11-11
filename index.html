@@ -131,7 +131,7 @@
       z-index: 1;
     }
 
-    /* Frosted Transparent Acrylic/Glass Flap */
+/* Frosted Transparent Acrylic/Glass Flap Strictly Masked to Triangle */
     .envelope-flap {
       position: absolute;
       top: 0;
@@ -140,57 +140,50 @@
       height: 180px;
       background: linear-gradient(
         180deg,
-        rgba(255, 255, 255, 0.14) 0%,
-        rgba(50, 6, 26, 0.28) 45%,
+        rgba(255, 255, 255, 0.16) 0%,
+        rgba(60, 6, 30, 0.25) 50%,
         rgba(20, 2, 10, 0.45) 100%
       );
-      backdrop-filter: blur(8px) saturate(140%);
-      -webkit-backdrop-filter: blur(8px) saturate(140%);
+      backdrop-filter: blur(10px) saturate(140%);
+      -webkit-backdrop-filter: blur(10px) saturate(140%);
+      /* Dual mask & clip-path forces the blur strictly into the triangle */
       clip-path: polygon(0 0, 100% 0, 50% 100%);
+      -webkit-mask-image: linear-gradient(black, black);
+      -webkit-mask-composite: destination-in;
+      mask-image: linear-gradient(black, black);
       transform-origin: top center;
       transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
       z-index: 3;
-      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.65));
     }
 
-    /* Metallic Gold Border Framing the Flap */
+    /* Metallic Gold Border Along the V-Edge */
     .envelope-flap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #fff2bf 0%, #d4af37 50%, #9c7f28 100%);
+      clip-path: polygon(
+        0 0,
+        100% 0,
+        50% 100%,
+        50% calc(100% - 3px),
+        calc(100% - 3px) 2px,
+        3px 2px
+      );
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    /* Specular Diagonal Light Sheen */
+    .envelope-flap::after {
       content: '';
       position: absolute;
       inset: 0;
       background: linear-gradient(
         135deg,
-        #fbe39d 0%,
-        #d4af37 50%,
-        #9c7f28 100%
-      );
-      /* Inset polygon that leaves a 2px outer stroke along the triangular edges */
-      clip-path: polygon(
-        0 0, 
-        100% 0, 
-        50% 100%, 
-        50% calc(100% - 3px), 
-        calc(100% - 3px) 2px, 
-        3px 2px
-      );
-      pointer-events: none;
-      z-index: 4;
-      filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.6));
-    }
-
-    /* Glass Surface Specular Sheen */
-    .envelope-flap::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.25) 0%,
-        rgba(255, 255, 255, 0.05) 40%,
-        transparent 100%
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.05) 35%,
+        transparent 65%
       );
       pointer-events: none;
       z-index: 4;
@@ -236,13 +229,7 @@
       transform: translateY(-1px);
     }
 
-    .envelope-box.unsealed .wax-seal {
-      transform: scale(0.6);
-      opacity: 0;
-      pointer-events: none;
-    }
-
-   @keyframes sealPulse {
+    @keyframes sealPulse {
       0%, 100% {
         transform: translate(-50%, -50%) scale(1);
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.75), 0 0 16px rgba(212, 175, 55, 0.45);
