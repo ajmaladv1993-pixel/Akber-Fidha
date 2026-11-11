@@ -107,19 +107,16 @@
       letter-spacing: 1px;
     }
 
-  /* Enlarged Photo Envelope Box */
+ /* Enlarged Photo Envelope Box */
     .envelope-box {
       width: 90%;
       max-width: 360px;
-      height: 480px; /* Taller portrait ratio to display the photo beautifully */
+      height: 480px;
       background: #17010a url('envelop.jpg') center center / cover no-repeat;
       border: 2px solid rgba(212, 175, 55, 0.6);
       border-radius: 18px;
       position: relative;
       box-shadow: 0 25px 65px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
       perspective: 900px;
       overflow: hidden;
     }
@@ -134,41 +131,33 @@
       z-index: 1;
     }
 
-    /* Mirrored Top Flap */
+    /* Top Flap with Gold Border Edge */
     .envelope-flap {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 180px;
-      background: inherit;
-      background-position: top center;
-      transform: scaleY(-1); /* Mirrors the image vertically */
-      clip-path: polygon(0 100%, 100% 100%, 50% 0); /* Inverted clip to match mirror flip */
-      transform-origin: top;
+      background: linear-gradient(180deg, #38041a 0%, #1a020c 100%);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
       transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
       z-index: 3;
-      filter: brightness(0.85) contrast(1.1);
-      box-shadow: inset 0 0 40px rgba(18, 3, 9, 0.8);
+      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.85));
     }
 
-    /* Decorative Gold Trim along the Flap V-edge */
+    /* Crisp Golden Border along the V-Flap */
     .envelope-flap::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(212, 175, 55, 0.35) 0%, rgba(30, 3, 14, 0.6) 100%);
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.5) 0%, rgba(251, 227, 157, 0.2) 100%);
+      clip-path: polygon(0 0, 100% 0, 50% 100%, 50% calc(100% - 2px), calc(100% - 2px) 0, 2px 0);
       pointer-events: none;
     }
-
-   .envelope-box.unsealed .wax-seal {
-      transform: translate(-50%, -50%) scale(0.6);
-      opacity: 0;
-      pointer-events: none;
-    }
-    
-    /* Wax Seal Positioned Exactly on the Flap Tip */
-   .wax-seal {
+ 
+   /* Wax Seal Locked Exactly on the 180px Flap Tip */
+    .wax-seal {
       width: 78px;
       height: 78px;
       border-radius: 50%;
@@ -179,14 +168,20 @@
       align-items: center;
       justify-content: center;
       position: absolute;
-      top: 180px; /* Aligns with the 180px bottom tip of the flap */
-      left: 50%; /* Locks exactly in the horizontal center */
-      transform: translate(-50%, -50%); /* Centers the seal over the tip */
+      top: 180px;
+      left: 50%;
+      transform: translate(-50%, -50%);
       z-index: 5;
       cursor: pointer;
       user-select: none;
-      transition: transform 0.4s ease, opacity 0.4s ease;
+      transition: opacity 0.4s ease, transform 0.4s ease;
       animation: sealPulse 2.4s infinite ease-in-out;
+    }
+
+    .envelope-box.unsealed .wax-seal {
+      transform: translate(-50%, -50%) scale(0.6);
+      opacity: 0;
+      pointer-events: none;
     }
     
     .seal-text {
@@ -207,11 +202,17 @@
       pointer-events: none;
     }
 
-    @keyframes sealPulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 6px 20px rgba(0,0,0,0.75), 0 0 16px rgba(212,175,55,0.45); }
-      50% { transform: scale(1.06); box-shadow: 0 8px 26px rgba(0,0,0,0.85), 0 0 22px rgba(212,175,55,0.7); }
+   @keyframes sealPulse {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.75), 0 0 16px rgba(212, 175, 55, 0.45);
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.06);
+        box-shadow: 0 8px 26px rgba(0, 0, 0, 0.85), 0 0 22px rgba(212, 175, 55, 0.7);
+      }
     }
-
+    
     .tap-hint {
       margin-top: 48px;
       font-family: 'Plus Jakarta Sans', sans-serif;
