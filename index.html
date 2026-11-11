@@ -7,9 +7,9 @@
 
   <!-- Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
- <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Amiri:wght@400;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg-dark: #120309;
@@ -62,6 +62,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      padding: 16px;
       transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.9s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -71,35 +72,50 @@
       pointer-events: none;
     }
 
+    .envelope-title {
+      font-family: 'Pinyon Script', cursive;
+      font-size: 3.5rem;
+      background: linear-gradient(135deg, #ffffff 0%, #fbe39d 40%, #d4af37 75%, #aa7c11 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 24px;
+      text-align: center;
+      padding: 4px 16px;
+      line-height: 1.35;
+      filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.85));
+      letter-spacing: 1px;
+    }
+
+    /* Enlarged Envelope Box */
     .envelope-box {
-      width: 90%;
-      max-width: 340px;
-      height: 230px;
+      width: 92%;
+      max-width: 380px;
+      height: 260px;
       background: #20030f;
       border: 1.5px solid rgba(212, 175, 55, 0.45);
-      border-radius: 12px;
+      border-radius: 14px;
       position: relative;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 25px rgba(212, 175, 55, 0.15);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.88), 0 0 28px rgba(212, 175, 55, 0.16);
       display: flex;
       align-items: center;
       justify-content: center;
-      perspective: 800px;
+      perspective: 900px;
       overflow: visible;
     }
 
+    /* Responsive Envelope Flap */
     .envelope-flap {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 0;
-      border-left: 170px solid transparent;
-      border-right: 170px solid transparent;
-      border-top: 125px solid #2e0416;
+      height: 145px;
+      background: #2b0415;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
       transform-origin: top;
       transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 3;
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.55));
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
     }
 
     .envelope-box.unsealed .envelope-flap {
@@ -107,29 +123,38 @@
       z-index: 1;
     }
 
+    /* Enlarged Wax Seal with Solid Monogram */
     .wax-seal {
-      width: 66px;
-      height: 66px;
+      width: 78px;
+      height: 78px;
       border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #ffd977 0%, #d4af37 60%, #886815 100%);
-      border: 2px solid #fff2bf;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.7), 0 0 14px rgba(212, 175, 55, 0.4);
+      border: 2.5px solid #fff2bf;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.75), 0 0 16px rgba(212, 175, 55, 0.45);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Alex Brush', cursive;
-      font-size: 1.9rem;
-      color: #380211;
-      font-weight: 700;
       position: absolute;
-      top: 96px;
+      top: 108px;
       z-index: 4;
       cursor: pointer;
       user-select: none;
       transition: transform 0.4s ease, opacity 0.4s ease;
       animation: sealPulse 2.4s infinite ease-in-out;
     }
-    
+
+    .seal-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #2b020e;
+      letter-spacing: 2px;
+      line-height: 1;
+      text-shadow: 0 1px 1px rgba(255, 240, 180, 0.4);
+      display: inline-block;
+      transform: translateY(-1px);
+    }
+
     .envelope-box.unsealed .wax-seal {
       transform: scale(0.6);
       opacity: 0;
@@ -137,27 +162,15 @@
     }
 
     @keyframes sealPulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 4px 18px rgba(0,0,0,0.7), 0 0 14px rgba(212,175,55,0.4); }
-      50% { transform: scale(1.06); box-shadow: 0 6px 24px rgba(0,0,0,0.8), 0 0 20px rgba(212,175,55,0.65); }
+      0%, 100% { transform: scale(1); box-shadow: 0 6px 20px rgba(0,0,0,0.75), 0 0 16px rgba(212,175,55,0.45); }
+      50% { transform: scale(1.06); box-shadow: 0 8px 26px rgba(0,0,0,0.85), 0 0 22px rgba(212,175,55,0.7); }
     }
 
-    .envelope-title {
-      font-family: 'Alex Brush', cursive;
-      font-size: 3.5rem;
-      background: linear-gradient(135deg, #ffffff 0%, #fbe39d 40%, #d4af37 75%, #aa7c11 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 20px;
-      text-align: center;
-      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8));
-      letter-spacing: 1px;
-    }
-    
     .tap-hint {
-      margin-top: 45px;
+      margin-top: 48px;
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 0.78rem;
-      letter-spacing: 2px;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
       color: var(--gold-light);
       opacity: 0.85;
@@ -291,16 +304,17 @@
       color: var(--text-soft);
     }
 
-   /* Metallic Gold Gradient for Couple Names */
+    /* Metallic Gold Gradient for Couple Names in Pinyon Script */
     .couple-title {
-      font-family: 'Alex Brush', cursive;
+      font-family: 'Pinyon Script', cursive;
       font-size: 3.6rem;
       background: linear-gradient(135deg, #ffffff 0%, #fbe39d 35%, #d4af37 70%, #aa7c11 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      line-height: 1.25;
+      line-height: 1.35;
+      padding: 4px 16px;
       filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.7));
-      margin: 6px 0;
+      margin: 4px 0;
     }
 
     .ampersand {
@@ -562,7 +576,9 @@
     <div class="envelope-title">Akber &amp; Fidha</div>
     <div class="envelope-box" id="envelopeBox">
       <div class="envelope-flap"></div>
-      <div class="wax-seal" id="waxSealBtn">A&amp;F</div>
+      <div class="wax-seal" id="waxSealBtn">
+        <span class="seal-text">A/F</span>
+      </div>
     </div>
     <div class="tap-hint">Tap Seal to Open Invitation</div>
   </div>
@@ -744,7 +760,6 @@
         }
       }
     }
-
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
