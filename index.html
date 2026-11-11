@@ -134,30 +134,40 @@
       z-index: 1;
     }
 
-    /* Subtle Glassmorphic Top Flap */
+    /* Mirrored Top Flap */
     .envelope-flap {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 180px;
-      background: linear-gradient(180deg, rgba(43, 4, 21, 0.85) 0%, rgba(18, 2, 8, 0.4) 100%);
-      backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
-      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      background: inherit;
+      background-position: top center;
+      transform: scaleY(-1); /* Mirrors the image vertically */
+      clip-path: polygon(0 100%, 100% 100%, 50% 0); /* Inverted clip to match mirror flip */
       transform-origin: top;
-      transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
       z-index: 3;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+      filter: brightness(0.85) contrast(1.1);
+      box-shadow: inset 0 0 40px rgba(18, 3, 9, 0.8);
+    }
+
+    /* Decorative Gold Trim along the Flap V-edge */
+    .envelope-flap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(212, 175, 55, 0.35) 0%, rgba(30, 3, 14, 0.6) 100%);
+      pointer-events: none;
     }
 
     .envelope-box.unsealed .envelope-flap {
-      transform: rotateX(180deg);
+      transform: rotateX(180deg) scaleY(-1);
       opacity: 0;
       z-index: 1;
     }
 
-    /* Centered Golden Wax Seal positioned over the hands */
+    /* Wax Seal Positioned Exactly on the Flap Tip */
     .wax-seal {
       width: 78px;
       height: 78px;
@@ -169,8 +179,9 @@
       align-items: center;
       justify-content: center;
       position: absolute;
-      top: 48%; /* Centers perfectly over the hands in envelope.jpg */
-      transform: translateY(-50%);
+      top: 175px; /* Locked directly over the triangular point of the 180px flap */
+      left: 50%;
+      transform: translate(-50%, -50%);
       z-index: 4;
       cursor: pointer;
       user-select: none;
