@@ -62,7 +62,7 @@
       position: relative;
     }
 
-    /* Ambient Gold Shimmer Canvas */
+   /* Ambient Gold Shimmer Canvas */
     #particleCanvas {
       position: fixed;
       top: 0;
@@ -73,7 +73,7 @@
       z-index: 1;
     }
 
-   /* Virtual Envelope Overlay */
+    /* Virtual Envelope Overlay */
     #envelopeOverlay {
       position: fixed;
       inset: 0;
@@ -121,7 +121,7 @@
       z-index: 1;
     }
 
-    /* Acrylic Glass Flap (Confined strictly to triangle) */
+    /* Acrylic Glass Flap (Confined strictly to triangle, no rectangular blur leak) */
     .envelope-flap {
       position: absolute;
       top: 0;
@@ -130,19 +130,16 @@
       height: 180px;
       background: linear-gradient(
         180deg,
-        rgba(255, 255, 255, 0.16) 0%,
-        rgba(60, 6, 30, 0.25) 50%,
-        rgba(20, 2, 10, 0.45) 100%
+        rgba(255, 255, 255, 0.18) 0%,
+        rgba(255, 255, 255, 0.05) 30%,
+        rgba(75, 8, 38, 0.35) 70%,
+        rgba(25, 2, 12, 0.55) 100%
       );
-      backdrop-filter: blur(8px) saturate(140%);
-      -webkit-backdrop-filter: blur(8px) saturate(140%);
       clip-path: polygon(0 0, 100% 0, 50% 100%);
-      -webkit-mask-image: linear-gradient(black, black);
-      -webkit-mask-composite: destination-in;
-      mask-image: linear-gradient(black, black);
       transform-origin: top center;
       transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
       z-index: 3;
+      filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.75));
     }
 
     /* Solid Gold Border Framing the Triangular Flap Edge */
@@ -155,9 +152,9 @@
         0 0,
         100% 0,
         50% 100%,
-        50% calc(100% - 3px),
-        calc(100% - 3px) 2px,
-        3px 2px
+        50% calc(100% - 2.5px),
+        calc(100% - 2.5px) 2px,
+        2.5px 2px
       );
       pointer-events: none;
       z-index: 4;
@@ -171,10 +168,11 @@
       inset: 0;
       background: linear-gradient(
         135deg,
-        rgba(255, 255, 255, 0.3) 0%,
-        rgba(255, 255, 255, 0.05) 35%,
+        rgba(255, 255, 255, 0.35) 0%,
+        rgba(255, 255, 255, 0.08) 35%,
         transparent 65%
       );
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
       pointer-events: none;
       z-index: 4;
     }
