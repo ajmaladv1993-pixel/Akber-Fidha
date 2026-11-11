@@ -131,29 +131,69 @@
       z-index: 1;
     }
 
-    /* Top Flap with Gold Border Edge */
+    /* Frosted Transparent Acrylic/Glass Flap */
     .envelope-flap {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 180px;
-      background: linear-gradient(180deg, #38041a 0%, #1a020c 100%);
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.14) 0%,
+        rgba(50, 6, 26, 0.28) 45%,
+        rgba(20, 2, 10, 0.45) 100%
+      );
+      backdrop-filter: blur(8px) saturate(140%);
+      -webkit-backdrop-filter: blur(8px) saturate(140%);
       clip-path: polygon(0 0, 100% 0, 50% 100%);
       transform-origin: top center;
       transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
       z-index: 3;
-      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.85));
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.65));
     }
 
-    /* Crisp Golden Border along the V-Flap */
-    .envelope-flap::after {
+    /* Metallic Gold Border Framing the Flap */
+    .envelope-flap::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.5) 0%, rgba(251, 227, 157, 0.2) 100%);
-      clip-path: polygon(0 0, 100% 0, 50% 100%, 50% calc(100% - 2px), calc(100% - 2px) 0, 2px 0);
+      background: linear-gradient(
+        135deg,
+        #fbe39d 0%,
+        #d4af37 50%,
+        #9c7f28 100%
+      );
+      /* Inset polygon that leaves a 2px outer stroke along the triangular edges */
+      clip-path: polygon(
+        0 0, 
+        100% 0, 
+        50% 100%, 
+        50% calc(100% - 3px), 
+        calc(100% - 3px) 2px, 
+        3px 2px
+      );
       pointer-events: none;
+      z-index: 4;
+      filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.6));
+    }
+
+    /* Glass Surface Specular Sheen */
+    .envelope-flap::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.25) 0%,
+        rgba(255, 255, 255, 0.05) 40%,
+        transparent 100%
+      );
+      pointer-events: none;
+      z-index: 4;
     }
  
    /* Wax Seal Locked Exactly on the 180px Flap Tip */
